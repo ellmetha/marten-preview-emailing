@@ -38,13 +38,19 @@ end
 ```
 
 By default, delivered emails are stored under `MartenPreviewEmailing::DEFAULT_EMAILS_LOCATION` (relative to your
-project root). You can customize this location at initialization time:
+project root). You can customize this location at initialization time by passing a relative path as a string:
 
 ```crystal
 Marten.configure do |config|
-  config.emailing.backend = MartenPreviewEmailing::Backend.new(
-    location: MartenPreviewEmailing::DEFAULT_EMAILS_LOCATION
-  )
+  config.emailing.backend = MartenPreviewEmailing::Backend.new("tmp/custom-emails")
+end
+```
+
+You can also pass an absolute `Path` if you need to store previews outside of the project:
+
+```crystal
+Marten.configure do |config|
+  config.emailing.backend = MartenPreviewEmailing::Backend.new(Path["/tmp/marten-emails"])
 end
 ```
 
@@ -61,17 +67,12 @@ end
 ```
 
 You can then browse collected emails at `http://localhost:8000/emails`. Each delivered email is also written to a
-dedicated directory containing `rich.html` (HTML part) and/or `plain.html` (text part), plus any attachments. You can
-also pass an absolute `Path` if you need to store previews outside of the project:
-
-```crystal
-MartenPreviewEmailing::Backend.new(Path["/tmp/marten-emails"])
-```
+dedicated directory containing `rich.html` (HTML part) and/or `plain.html` (text part), plus any attachments.
 
 ## Authors
 
 Morgan Aubert ([@ellmetha](https://github.com/ellmetha)) and
-[contributors](https://github.com/martenframework/marten-preview-emailing/contributors).
+[contributors](https://github.com/ellmetha/marten-preview-emailing/contributors).
 
 ## License
 
