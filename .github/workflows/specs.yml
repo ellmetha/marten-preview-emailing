@@ -1,0 +1,28 @@
+name: Specs
+
+on:
+  push:
+    branches: "*"
+  pull_request:
+    branches: "*"
+
+jobs:
+  specs:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal: [
+          '1.19.0',
+          '1.20.0',
+          '1.21.0',
+          'nightly',
+        ]
+    container:
+      image: crystallang/crystal:${{ matrix.crystal }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install shards
+      run: shards install --ignore-crystal-version --skip-postinstall --skip-executables
+    - name: Run tests
+      run: make tests
