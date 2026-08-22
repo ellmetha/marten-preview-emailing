@@ -13,7 +13,7 @@ Simply add the following entry to your project's `shard.yml`:
 ```yaml
 dependencies:
   marten_preview_emailing:
-    github: martenframework/marten-preview-emailing
+    github: ellmetha/marten-preview-emailing
 ```
 
 And run `shards install` afterward.
