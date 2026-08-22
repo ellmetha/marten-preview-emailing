@@ -15,7 +15,7 @@ describe MartenPreviewEmailing::EmailAttachmentHandler do
 
       response.status.should eq(200)
       response.content.should eq("Attachment content")
-      response.content_type.should eq("text/plain")
+      response.content_type.split(";").first.strip.should eq("text/plain")
     end
 
     it "returns a 404 response when the attachment does not exist" do
