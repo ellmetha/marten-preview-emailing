@@ -1,0 +1,22 @@
+name: marten_preview_emailing
+version: 0.1.0
+
+authors:
+  - Morgan Aubert <me@morganaubert.name>
+
+description: |
+  A Marten emailing backend that lets you preview emails in the browser.
+
+crystal: ">= 1.4.0"
+
+dependencies:
+  marten:
+    github: martenframework/marten
+    branch: main
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    branch: master
+
+license: MIT

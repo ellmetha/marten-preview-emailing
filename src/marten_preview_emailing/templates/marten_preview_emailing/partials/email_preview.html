@@ -1,0 +1,76 @@
+<div id="message_headers">
+  <dl>
+    <dt>From:</dt>
+    <dd>{{ email.from }}</dd>
+
+    {% if email.has_reply_to? %}
+      <dt>Reply-To:</dt>
+      <dd>{{ email.reply_to }}</dd>
+    {% endif %}
+
+    {% if email.has_subject? %}
+      <dt>Subject:</dt>
+      <dd>{{ email.subject }}</dd>
+    {% endif %}
+
+    <dt>Date:</dt>
+    <dd>{{ email.formatted_date }}</dd>
+
+    {% if email.has_to? %}
+      <dt>To:</dt>
+      <dd>{{ email.to }}</dd>
+    {% endif %}
+
+    {% if email.has_cc? %}
+      <dt>CC:</dt>
+      <dd>{{ email.cc }}</dd>
+    {% endif %}
+
+    {% if email.has_bcc? %}
+      <dt>BCC:</dt>
+      <dd>{{ email.bcc }}</dd>
+    {% endif %}
+
+    {% for key, value in email.headers %}
+      <dt>{{ key }}:</dt>
+      <dd>{{ value }}</dd>
+    {% endfor %}
+
+    {% if email.has_attachments? %}
+      <dt>Attachments:</dt>
+      <dd>
+        {% for attachment in email.attachments %}
+          {% if standalone %}
+            <a href="{{ attachment.path }}">{{ attachment.filename }}</a>
+          {% else %}
+            <a href="{% url 'preview_emailing:attachment' id: email.id, filename: attachment.filename %}">{{ attachment.filename }}</a>
+          {% endif %}
+        {% endfor %}
+      </dd>
+    {% endif %}
+  </dl>
+
+  {% if email.has_html? && email.has_text? %}
+    <p class="alternate">
+      {% if html %}
+        {% if standalone %}
+          <a href="plain.html">View plain text version</a>
+        {% else %}
+          <a href="{% url 'preview_emailing:detail' id: email.id %}?part=plain">View plain text version</a>
+        {% endif %}
+      {% else %}
+        {% if standalone %}
+          <a href="rich.html">View HTML version</a>
+        {% else %}
+          <a href="{% url 'preview_emailing:detail' id: email.id %}">View HTML version</a>
+        {% endif %}
+      {% endif %}
+    </p>
+  {% endif %}
+</div>
+
+{% if html %}
+  <iframe srcdoc="{{ body }}"></iframe>
+{% else %}
+  <pre id="message_body">{{ body }}</pre>
+{% endif %}

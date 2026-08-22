@@ -1,0 +1,76 @@
+{% extend "marten_preview_emailing/base.html" %}
+
+{% block title %}{{ email.subject|default:"Email preview" }}{% endblock %}
+
+{% block extra_styles %}
+  html, body {
+    height: 100%;
+  }
+  #toolbar {
+    background: #fff;
+    border-bottom: 1px solid #dedede;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  #container {
+    margin: 10px auto;
+  }
+  #message_headers {
+    background: #fff;
+    font-size: 12px;
+    border-bottom: 1px solid #dedede;
+    margin-bottom: 10px;
+    overflow: auto;
+    padding: 0 12px;
+  }
+  #message_headers dl {
+    float: left;
+    line-height: 1.3em;
+    padding: 0;
+    margin: 8px 0;
+  }
+  #message_headers dt {
+    width: 92px;
+    margin: 0;
+    float: left;
+    clear: left;
+    text-align: right;
+    font-weight: bold;
+    color: #7f7f7f;
+  }
+  #message_headers dd {
+    margin: 0 0 0 102px;
+  }
+  #message_headers dd a + a {
+    margin-left: 0.5em;
+  }
+  #message_headers p.alternate {
+    float: right;
+    margin: 8px 0;
+  }
+  pre#message_body {
+    padding: 4px 12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid #eee;
+    background-color: #fcfcfc;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+  iframe {
+    border: 0;
+    width: 100%;
+    height: calc(100vh - 180px);
+  }
+{% endblock %}
+
+{% block toolbar %}
+  <div id="toolbar">
+    <a href="{% url 'preview_emailing:list' %}">&larr; All emails</a>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div id="container">
+    {% include "marten_preview_emailing/partials/email_preview.html" %}
+  </div>
+{% endblock %}

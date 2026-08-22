@@ -1,0 +1,80 @@
+{% extend "marten_preview_emailing/base.html" %}
+
+{% block extra_styles %}
+  header {
+    background: #fff;
+    border-bottom: 1px solid #dedede;
+    padding: 16px 24px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 18px;
+  }
+  main {
+    padding: 24px;
+  }
+  p.empty {
+    color: #7f7f7f;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #dedede;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+  }
+  th {
+    font-size: 12px;
+    color: #7f7f7f;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tr:last-child td {
+    border-bottom: 0;
+  }
+{% endblock %}
+
+{% block header %}
+  <header>
+    <h1>Email previews</h1>
+  </header>
+{% endblock %}
+
+{% block content %}
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for email in emails %}
+          <tr>
+            <td>
+              <a href="{% url 'preview_emailing:detail' id: email.id %}">
+                {{ email.subject|default:"(no subject)" }}
+              </a>
+            </td>
+            <td>{{ email.from }}</td>
+            <td>{{ email.to }}</td>
+            <td>{{ email.formatted_date }}</td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="4">
+              <p class="empty">No emails have been collected yet.</p>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+{% endblock %}
