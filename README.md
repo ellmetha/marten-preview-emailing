@@ -3,7 +3,7 @@
 [![Specs](https://github.com/ellmetha/marten-preview-emailing/workflows/Specs/badge.svg)](https://github.com/ellmetha/marten-preview-emailing/actions)
 [![QA](https://github.com/ellmetha/marten-preview-emailing/workflows/QA/badge.svg)](https://github.com/ellmetha/marten-preview-emailing/actions)
 
-**Marten Preview Emailing** provides a development emailing backend that collects sent emails so they can be previewed
+**Marten Preview Emailing** provides a development [emailing backend](https://martenframework.com/docs/emailing) that collects sent emails so they can be previewed
 in the browser.
 
 ## Installation
