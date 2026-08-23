@@ -94,6 +94,17 @@ module MartenPreviewEmailing
       new(id, directory, Meta.from_json(File.read(meta_path)))
     end
 
+    # Deletes all preview emails under `location`.
+    #
+    # When `location` is omitted, `#emails_location` is used.
+    def self.delete_all(location : Path = MartenPreviewEmailing.emails_location) : Nil
+      return unless Dir.exists?(location)
+
+      Dir.children(location.to_s).each do |name|
+        find(location, name).try(&.delete)
+      end
+    end
+
     def self.valid_id?(id : String) : Bool
       !id.includes?("..") && !!(id =~ /\A[A-Za-z0-9._-]+\z/)
     end
@@ -163,6 +174,11 @@ module MartenPreviewEmailing
     # Returns the text body if one was collected.
     def text_body : String?
       read_optional(directory.join("body.txt"))
+    end
+
+    # Deletes this preview email from disk.
+    def delete : Nil
+      FileUtils.rm_rf(directory)
     end
 
     private FILE_TEMPLATE_NAME = "marten_preview_emailing/email_file.html"

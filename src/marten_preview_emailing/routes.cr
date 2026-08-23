@@ -12,7 +12,9 @@ module MartenPreviewEmailing
   # ```
   ROUTES = Marten::Routing::Map.draw(:preview_emailing) do
     path "", EmailListHandler, name: "list"
+    path "clear", EmailClearHandler, name: "clear"
     path "/<id:str>/attachments/<filename:str>", EmailAttachmentHandler, name: "attachment"
+    path "/<id:str>/delete", EmailDeleteHandler, name: "delete"
     path "/<id:str>", EmailDetailHandler, name: "detail"
   end
 end

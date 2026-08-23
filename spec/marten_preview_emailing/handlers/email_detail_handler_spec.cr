@@ -14,6 +14,7 @@ describe MartenPreviewEmailing::EmailDetailHandler do
       response.content.should contain("HTML body")
       response.content.should contain("View plain text version")
       response.content.should contain("/emails")
+      response.content.should contain("Delete")
     end
 
     it "renders the plain text version when requested" do

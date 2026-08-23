@@ -5,10 +5,41 @@
     background: #fff;
     border-bottom: 1px solid #dedede;
     padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
   }
   header h1 {
     margin: 0;
     font-size: 18px;
+  }
+  .actions form {
+    display: inline;
+    margin: 0;
+  }
+  button.danger {
+    background: none;
+    border: 0;
+    color: #c0392b;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+  button.danger:hover {
+    text-decoration: underline;
+  }
+  button.secondary {
+    background: #fff;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    color: #222;
+    cursor: pointer;
+    font: inherit;
+    padding: 6px 12px;
+  }
+  button.secondary:hover {
+    background: #f7f7f7;
   }
   main {
     padding: 24px;
@@ -41,6 +72,16 @@
 {% block header %}
   <header>
     <h1>Email previews</h1>
+    {% if emails.size > 0 %}
+      <div class="actions">
+        <form method="post" action="{% url 'preview_emailing:clear' %}">
+          {% csrf_input %}
+          <button type="submit" class="secondary" onclick="return confirm('Delete all collected emails?')">
+            Clear all
+          </button>
+        </form>
+      </div>
+    {% endif %}
   </header>
 {% endblock %}
 
@@ -53,6 +94,7 @@
           <th>From</th>
           <th>To</th>
           <th>Date</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -66,10 +108,18 @@
             <td>{{ email.from }}</td>
             <td>{{ email.to }}</td>
             <td>{{ email.formatted_date }}</td>
+            <td class="actions">
+              <form method="post" action="{% url 'preview_emailing:delete' id: email.id %}">
+                {% csrf_input %}
+                <button type="submit" class="danger" onclick="return confirm('Delete this email?')">
+                  Delete
+                </button>
+              </form>
+            </td>
           </tr>
         {% else %}
           <tr>
-            <td colspan="4">
+            <td colspan="5">
               <p class="empty">No emails have been collected yet.</p>
             </td>
           </tr>

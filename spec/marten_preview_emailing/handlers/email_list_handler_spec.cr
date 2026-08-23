@@ -22,6 +22,8 @@ describe MartenPreviewEmailing::EmailListHandler do
       response.content.should contain("test@example.com")
       response.content.should contain("webmaster@localhost")
       response.content.should contain("/emails/#{id}")
+      response.content.should contain("Clear all")
+      response.content.should contain("Delete")
     end
   end
 end

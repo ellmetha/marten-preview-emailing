@@ -11,6 +11,25 @@
     border-bottom: 1px solid #dedede;
     font-size: 12px;
     padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  #toolbar form {
+    display: inline;
+    margin: 0;
+  }
+  button.danger {
+    background: none;
+    border: 0;
+    color: #c0392b;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+  button.danger:hover {
+    text-decoration: underline;
   }
   #container {
     margin: 10px auto;
@@ -66,6 +85,12 @@
 {% block toolbar %}
   <div id="toolbar">
     <a href="{% url 'preview_emailing:list' %}">&larr; All emails</a>
+    <form method="post" action="{% url 'preview_emailing:delete' id: email.id %}">
+      {% csrf_input %}
+      <button type="submit" class="danger" onclick="return confirm('Delete this email?')">
+        Delete
+      </button>
+    </form>
   </div>
 {% endblock %}
 

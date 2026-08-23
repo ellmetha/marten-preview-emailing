@@ -1,3 +1,4 @@
+require "file_utils"
 require "html"
 require "json"
 require "mime"

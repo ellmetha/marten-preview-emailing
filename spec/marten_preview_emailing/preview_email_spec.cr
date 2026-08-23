@@ -144,6 +144,29 @@ describe MartenPreviewEmailing::PreviewEmail do
       File.exists?(directory.join("body.txt")).should be_true
     end
   end
+
+  describe "#delete" do
+    it "removes the preview email directory from disk" do
+      preview_backend.deliver(MartenPreviewEmailing::PreviewEmailSpec::TestEmail.new)
+      email = MartenPreviewEmailing::PreviewEmail.all.first
+
+      email.delete
+
+      Dir.exists?(email.directory).should be_false
+      MartenPreviewEmailing::PreviewEmail.find(MartenPreviewEmailing.emails_location, email.id).should be_nil
+    end
+  end
+
+  describe ".delete_all" do
+    it "removes all preview emails from disk" do
+      preview_backend.deliver(MartenPreviewEmailing::PreviewEmailSpec::TestEmail.new)
+      preview_backend.deliver(MartenPreviewEmailing::PreviewEmailSpec::TestEmail.new)
+
+      MartenPreviewEmailing::PreviewEmail.delete_all
+
+      MartenPreviewEmailing::PreviewEmail.all.should be_empty
+    end
+  end
 end
 
 module MartenPreviewEmailing::PreviewEmailSpec
